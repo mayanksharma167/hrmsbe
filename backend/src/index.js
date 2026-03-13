@@ -11,23 +11,24 @@ const errorHandler = require("./middleware/errorHandler");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const allowedOrigins = ["http://localhost:5173", process.env.FRONTEND_URL];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://hrms-lte.vercel.app/",
+];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow requests with no origin (mobile apps, curl etc.)
       if (!origin) return callback(null, true);
 
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
+      } else {
+        return callback(null, false);
       }
-
-      return callback(new Error("CORS not allowed"));
     },
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
   }),
 );
 
