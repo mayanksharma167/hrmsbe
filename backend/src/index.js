@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3001;
 // ─── Middleware ───────────────────────────────────────────────────────────────
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+    origin: process.env.CORS_ORIGIN || "http://localhost:5173" || 5000,
     methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
@@ -39,12 +39,10 @@ app.use("/api/dashboard", dashboardRoutes);
 
 // 404 handler
 app.use((req, res) => {
-  res
-    .status(404)
-    .json({
-      error: "Not Found",
-      message: `Route ${req.method} ${req.path} not found.`,
-    });
+  res.status(404).json({
+    error: "Not Found",
+    message: `Route ${req.method} ${req.path} not found.`,
+  });
 });
 
 // Global error handler (must be last)
