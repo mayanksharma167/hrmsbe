@@ -1,0 +1,25 @@
+{
+  "name": "hrms-lite-backend",
+  "author": "mayank",
+  "version": "1.0.0",
+  "description": "HRMS Lite Backend - Node + Express + MongoDB Atlas",
+  "main": "src/index.js",
+  "engines": {
+    "node": "18.x"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "seed": "node src/seed.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-validator": "^7.1.0",
+    "mongoose": "^8.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
+}
