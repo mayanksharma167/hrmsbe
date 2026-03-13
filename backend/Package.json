@@ -1,5 +1,6 @@
 {
   "name": "hrms-lite-backend",
+  "author": "mayank",
   "version": "1.0.0",
   "description": "HRMS Lite Backend - Node + Express + MongoDB Atlas",
   "main": "src/index.js",
