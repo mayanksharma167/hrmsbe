@@ -21,14 +21,15 @@ app.use(
     origin: function (origin, callback) {
       if (!origin) return callback(null, true);
 
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      } else {
-        return callback(null, false);
-      }
+      if (origin.includes("localhost")) return callback(null, true);
+
+      if (origin.includes("vercel.app")) return callback(null, true);
+
+      return callback(null, false);
     },
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   }),
 );
 
