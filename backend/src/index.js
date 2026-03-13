@@ -11,12 +11,25 @@ const errorHandler = require("./middleware/errorHandler");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// ─── Allowed Origins ──────────────────────────────────────────────────────────
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.FRONTEND_URL, // Vercel URL
+];
+
 // ─── Middleware ───────────────────────────────────────────────────────────────
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:5173" || 5000,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS not allowed"));
+      }
+    },
     methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   }),
 );
 
@@ -45,7 +58,7 @@ app.use((req, res) => {
   });
 });
 
-// Global error handler (must be last)
+// Global error handler
 app.use(errorHandler);
 
 // ─── MongoDB Atlas Connection ─────────────────────────────────────────────────
@@ -64,8 +77,7 @@ const connectDB = async () => {
 // ─── Start Server ─────────────────────────────────────────────────────────────
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log(`🚀 HRMS Lite backend running on http://localhost:${PORT}`);
-    console.log(`   Health check: http://localhost:${PORT}/health`);
+    console.log(`🚀 HRMS Lite backend running on port ${PORT}`);
   });
 });
 
